@@ -21,9 +21,14 @@ public class JournalController {
     private JournalServiceImpl journalService;
 
     @PostMapping("/save")
-    public ResponseEntity<Boolean> saveJournal(@RequestBody Journal journal,
+    public ResponseEntity<?> saveJournal(@RequestBody Journal journal,
                                                @RequestHeader("Username") String userName) {
-        return new ResponseEntity<>(journalService.saveJournal(journal, userName), HttpStatus.CREATED);
+        try{
+            return new ResponseEntity<>(journalService.saveJournal(journal, userName), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Some thing bad occur!", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/all")

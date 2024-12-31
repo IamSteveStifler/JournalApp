@@ -8,6 +8,7 @@ import com.aman.Journal.App.service.JournalService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,12 +23,14 @@ public class JournalServiceImpl implements JournalService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional
     public boolean saveJournal(Journal journal, String userName) {
         User userInDb = userRepository.findByUserName(userName);
         if(userInDb == null) return false;
         journal.setDate(LocalDateTime.now());
         journalRepository.save(journal);
         userInDb.getJournals().add(journal);
+        userInDb.setUserName(null);
         userRepository.save(userInDb);
         return true;
     }
