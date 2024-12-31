@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface JournalService {
 
-    boolean saveJournal(Journal journal);
-    List<Journal> getAllJournal();
+    boolean saveJournal(Journal journal, String userName);
+    List<Journal> getAllJournalOfUser(String userName);
     Journal getJournalById(ObjectId id);
     Journal updateJournalById(ObjectId id, Journal updatedJournal);
     Boolean deleteJournalById(ObjectId id);

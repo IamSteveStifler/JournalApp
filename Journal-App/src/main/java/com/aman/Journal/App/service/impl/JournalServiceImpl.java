@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,23 +19,32 @@ public class JournalServiceImpl implements JournalService {
     @Autowired
     private JournalRepository journalRepository;
 
-//    @Autowired
-//    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public boolean saveJournal(Journal journal) {
-//        User userInDb = userRepository.findByUserName(userName);
-//        if(userInDb == null) return false;
+    public boolean saveJournal(Journal journal, String userName) {
+        User userInDb = userRepository.findByUserName(userName);
+        if(userInDb == null) return false;
         journal.setDate(LocalDateTime.now());
-//        userInDb.getJournals().add(journal);
-//        userRepository.save(userInDb);
         journalRepository.save(journal);
+        userInDb.getJournals().add(journal);
+        userRepository.save(userInDb);
         return true;
     }
 
     @Override
-    public List<Journal> getAllJournal() {
-        return journalRepository.findAll();
+    public List<Journal> getAllJournalOfUser(String userName) {
+        User userInDb = userRepository.findByUserName(userName);
+        if(userInDb == null) return null;
+        List<Journal> journals = userInDb.getJournals();
+//        List<Journal> journalList = new ArrayList<>();
+//        for(Journal journal: journals){
+//            journalList.add(journalRepository.findById(journal.getId()).orElse(null));
+//        }
+//        return  journalList;
+        return journals;
+
     }
 
     @Override

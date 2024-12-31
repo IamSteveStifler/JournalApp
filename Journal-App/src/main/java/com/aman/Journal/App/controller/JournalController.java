@@ -21,13 +21,14 @@ public class JournalController {
     private JournalServiceImpl journalService;
 
     @PostMapping("/save")
-    public ResponseEntity<Boolean> saveJournal(@RequestBody Journal journal) {
-        return new ResponseEntity<>(journalService.saveJournal(journal), HttpStatus.CREATED);
+    public ResponseEntity<Boolean> saveJournal(@RequestBody Journal journal,
+                                               @RequestHeader("Username") String userName) {
+        return new ResponseEntity<>(journalService.saveJournal(journal, userName), HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Journal>> getAllJournals() {
-        return new ResponseEntity<>(journalService.getAllJournal(), HttpStatus.OK);
+    public ResponseEntity<List<Journal>> getAllJournalOfUser(@RequestHeader("Username") String userName) {
+        return new ResponseEntity<>(journalService.getAllJournalOfUser(userName), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
