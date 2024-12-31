@@ -11,6 +11,6 @@ public interface JournalService {
     List<Journal> getAllJournalOfUser(String userName);
     Journal getJournalById(ObjectId id);
     Journal updateJournalById(ObjectId id, Journal updatedJournal);
-    Boolean deleteJournalById(ObjectId id);
+    Boolean deleteJournalById(ObjectId id, String userName);
 
 }

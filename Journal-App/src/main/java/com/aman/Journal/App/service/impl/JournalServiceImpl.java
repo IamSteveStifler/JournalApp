@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,12 +63,18 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public Boolean deleteJournalById(ObjectId id) {
+    public Boolean deleteJournalById(ObjectId id, String userName) {
         Journal old = journalRepository.findById(id).orElse(null);
         if(old != null) {
+            User user = userRepository.findByUserName(userName);
+            List<Journal> journalList = user.getJournals();
+            journalList = journalList.stream().filter(journal -> !journal.getId().equals(id)).toList();
             journalRepository.deleteById(id);
+            user.setJournals(journalList);
+            userRepository.save(user);
             return true;
         }
+
         return false;
     }
 }
