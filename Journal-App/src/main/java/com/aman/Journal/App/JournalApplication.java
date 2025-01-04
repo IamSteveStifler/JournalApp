@@ -10,17 +10,10 @@ import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableTransactionManagement
 public class JournalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JournalApplication.class, args);
 		System.out.println("System is up and running on PORT: 8080");
 	}
-
-	@Bean
-	public PlatformTransactionManager transactionManagerConfiguration(MongoDatabaseFactory dbFactory) {
-		return new MongoTransactionManager(dbFactory);
-	}
-
 }

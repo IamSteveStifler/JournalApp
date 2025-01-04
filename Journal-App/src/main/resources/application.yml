@@ -1,8 +1,9 @@
 spring:
   application:
   name: Journal-App
+  main:
+    allow-circular-references: true
   data:
     mongodb:
-      uri: mongodb+srv://aman:VH5eDqvcuhZPVu3z@cluster0.kdm1s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      database: journaldb
+      uri: mongodb://localhost:27017/journaldb
       auto-index-creation: true
